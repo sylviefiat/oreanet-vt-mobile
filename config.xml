@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "nc.oreanet-fj.mobile"
+        versionCode = "1" 
+        version     = "0.0.2" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Oreanet FJ</name>
+
+    <description>
+        Oreanet FJ Mobile app. 
+    </description>
+   
+    <icon src="pin4-oreanet.png" />
+
+    <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
+        Sylvie Fiat
+    </author>
+    
+    <!--
+      This allows your app to load assets from all *.oreanet.ird.nc domains    
+    <gap:access origin="http://oreanet-fj.ird.nc" subdomains="true" />
+    <gap:access origin="*" />
+    -->   
+    
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
+    <gap:allow-navigation href="http://193.51.249.53/*" />
+
+</widget>
