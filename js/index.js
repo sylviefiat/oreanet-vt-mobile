@@ -23,7 +23,7 @@ var app = {
     // Application Constructor
     initialize: function() {    	
         this.bindEvents();		
-	/*DEV  setTimeout(function(){app.receivedEvent('deviceready');},2000);*/
+	DEV  setTimeout(function(){app.receivedEvent('deviceready');},2000);
 	
     },
     // Bind Event Listeners
@@ -232,7 +232,7 @@ var app = {
             	no();
             }
     	}
-	xhr.open("GET","http://193.51.249.53:83/restcotnc/cot-fj.php",true);
+	xhr.open("GET","http://193.51.249.49:83/restcotnc/cot-fj.php",true);
     	xhr.send();
     }
     
