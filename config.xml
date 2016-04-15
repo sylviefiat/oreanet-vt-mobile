@@ -13,7 +13,7 @@
         Oreanet FJ Mobile app. 
     </description>
    
-    <icon src="pin4-oreanet.png" />
+    <icon src="pin5-oreanet.png" />
 
     <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
         Sylvie Fiat
@@ -26,6 +26,6 @@
     -->   
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
-    <gap:allow-navigation href="http://193.51.249.53/*" />
+    <gap:allow-navigation href="http://193.51.249.49/*" />
 
 </widget>
