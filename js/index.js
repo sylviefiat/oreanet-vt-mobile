@@ -246,7 +246,7 @@ var app = {
             	no();
             }
     	}
-	xhr.open("GET","http://193.51.249.49:83/restcotnc/cot-fj.php",true);
+	xhr.open("GET","http://rest-oreanet.ird.nc/restcotnc/cot-fj.php",true);
     	xhr.send();
     }
     
