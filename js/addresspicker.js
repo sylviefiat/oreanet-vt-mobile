@@ -113,6 +113,7 @@ if(!bg){
 		}
 		
 		radius = radius || that.settings.distanceWidgetRadius;
+		console.log(radius);
 		var circle =  new google.maps.Circle({
 			center: mapOptions.center,
 			radius: radius, // Km
@@ -153,19 +154,19 @@ if(!bg){
 				mapWidth: '100%',
 				mapHeight: '300px',
                 mapOptions: {
-                    zoom: 7,
-                    center: [-17.3608, 179.282654],
+                    zoom: 6,
+                    center: [-17.445122, 168.300851],
                     scrollwheel: true,
-		    zoomGesturesEnabled: true,
-		    scrollGesturesEnabled: true,
+		    		zoomGesturesEnabled: true,
+		    		scrollGesturesEnabled: true,
                     mapTypeId: "hybrid"
                 },
 				makerType: false, /* labeled, styled */
 				distanceWidget: true,
-				distanceWidgetRadius: 30,  /* meters */
+				distanceWidgetRadius: 300,  /* meters */
                 appendToAddressString: '',
                 geocoderOptions: {
-					language: "fr"
+					language: "en"
                 },
                 typeaheadOptions: {
                     source: that.source,
@@ -182,7 +183,7 @@ if(!bg){
 				
 				// internationalization
 				text: {
-					you_are_here: "Vous êtes ici",
+					you_are_here: "You are here",
 				},
 				map_rendered: false,
             }, options);

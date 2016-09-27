@@ -38,19 +38,19 @@ body {
 
 /* SURCHARGE JQUERY MOBILE COLORS */
 .ui-page-theme-a a, html .ui-bar-a a, html .ui-body-a a, html body .ui-group-theme-a a {
-	color: #00AAAD !important;
+	color: #FF8A80 !important;
 }
 .ui-page-theme-a a:visited, html .ui-bar-a a:visited, html .ui-body-a a:visited, html body .ui-group-theme-a a:visited {
-	color: #4f8093 !important;
+	color: #C62828 !important;
 }
 .ui-page-theme-a a:hover, html .ui-bar-a a:hover, html .ui-body-a a:hover, html body .ui-group-theme-a a:hover {
 	color: #DC7C24 !important;
 }
 .ui-page-theme-a .ui-btn.ui-btn-active, html .ui-bar-a .ui-btn.ui-btn-active, html .ui-body-a .ui-btn.ui-btn-active, html body .ui-group-theme-a .ui-btn.ui-btn-active, html head+body .ui-btn.ui-btn-a.ui-btn-active, .ui-page-theme-a .ui-checkbox-on:after, html .ui-bar-a .ui-checkbox-on:after, html .ui-body-a .ui-checkbox-on:after, html body .ui-group-theme-a .ui-checkbox-on:after, .ui-btn.ui-checkbox-on.ui-btn-a:after, .ui-page-theme-a .ui-flipswitch-active, html .ui-bar-a .ui-flipswitch-active, html .ui-body-a .ui-flipswitch-active, html body .ui-group-theme-a .ui-flipswitch-active, html body .ui-flipswitch.ui-bar-a.ui-flipswitch-active, .ui-page-theme-a .ui-slider-track .ui-btn-active, html .ui-bar-a .ui-slider-track .ui-btn-active, html .ui-body-a .ui-slider-track .ui-btn-active, html body .ui-group-theme-a .ui-slider-track .ui-btn-active, html body div.ui-slider-track.ui-body-a .ui-btn-active {
-	background-color:#00AAAD !important;
-	border-color:#00AAAD !important;
+	background-color:#FF8A80 !important;
+	border-color:#FF8A80 !important;
 	color: white;
-	text-shadow: 0 1px 0 #4f8093;
+	text-shadow: 0 1px 0 #b83434;
 }
 .ui-input-text input, .ui-input-search input {
 	font-size: 16px;
@@ -62,7 +62,7 @@ body {
 
 .page-header {
 	/*margin: 20px 0px 20px !important;*/
-	border-bottom:2px dotted #00AAAD !important;
+	border-bottom:2px dotted #FF8A80 !important;
 }
 
 
@@ -125,7 +125,7 @@ body {
     /*position:absolute; */
     /*margin:0px;*/
     overflow:visible;
-    /*background-color:#00AAAD;
+    /*background-color:#FF8A80;
     border-color:#AF7817;*/
     color: #ffffff !important;
     /*margin: 0px -15px 20px !important;*/
@@ -226,7 +226,7 @@ body {
 }
 
 .thankyoupage a {
-	color:#00AAAD;
+	color:#FF8A80;
 	font-weight: bold;
 }
 
@@ -257,7 +257,7 @@ body {
 	.well;
 	.lead;
 	font-weight: bold;
-	color: #00AAAD;
+	color: #FF8A80;
 }
 
 #msg .alert-heading {
@@ -316,7 +316,7 @@ input:required:hover {
 }
 
 #form-cot_admin .exergue {
-	background-color:#00AAAD;
+	background-color:#FF8A80;
 	font-weight: bold;
 	font-size: 18px;
 }
