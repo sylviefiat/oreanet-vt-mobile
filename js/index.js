@@ -177,7 +177,7 @@ var app = {
             }, 1000);
 
             //teste liste exist ajout du retour a la liste
-            db.listExist();
+            db.listExistNewForm();
 
             }, 0);
         }
@@ -187,6 +187,8 @@ var app = {
 
             console.log("<<<<<formulaire existant>>>>");
 
+            //On affiche bouton retour
+            document.getElementById("btn-cancel").id = "btn-cancel-on";
             // démarrer le plugin addressPicker
             app.addressPicker();
             // remplir avec ces données le formulaire
@@ -216,14 +218,8 @@ var app = {
                 }
             }, 1000);
 
-            //teste liste exist ajout du retour a la liste
-            db.listExist();
-
             }, 0);
-
         }
-    
-    
     },
 
     //on récupére l'id du formulaire à ouvrir
@@ -373,6 +369,8 @@ var app = {
             },
             // si on EST connecté
             function(){
+                //on affiche le lien retour a la liste si elle exist
+                db.listExistCLOSE();
             }
         );
 
