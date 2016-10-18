@@ -5,10 +5,10 @@ var db = {
 		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
 		cotsDb.transaction(function(transaction) {
 		    transaction.executeSql(sql.CREATE, [], function(transaction, results) {
-			console.log("checked cots database creation");
+			//console.log("checked cots database creation");
 			
 		    }, function(transaction, error) {
-		    	    console.log("erro creating db: "+error.message);
+		    	    //console.log("erro creating db: "+error.message);
 		    });
 		});
 		return cotsDb;
@@ -18,10 +18,10 @@ var db = {
 		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
 		cotsDb.transaction(function(transaction) {
 		    transaction.executeSql(sql.DROP, [], function(transaction, results) {
-			console.log("database supprimer");
+			//console.log("database supprimer");
 			
 		    }, function(transaction, error) {
-		    	    console.log("erro creating db: "+error.message);
+		    	    //console.log("erro creating db: "+error.message);
 		    });
 		});
 		return 0;
@@ -96,11 +96,11 @@ var db = {
 				for (i = 0; i < results.rows.length; i++){ 
 					
 					var idform = results.rows.item(i).id;
-					console.log("Id ======"+ idform);
+					//console.log("Id ======"+ idform);
 					return db.synchronizeCOTs("form", idform);
 				}
 			}, function(transaction, error) {		    
-		    console.log("some error updating data "+error.message);
+		    //console.log("some error updating data "+error.message);
 			});
 	    });
 	},
@@ -113,11 +113,11 @@ var db = {
 	 },*/
 
 	synchronizeCOTs: function(from, id) {
-		console.log("C good id=="+id+" et from==="+from)
+		//console.log("C good id=="+id+" et from==="+from)
 	    var cotsDb = db.openDB();
 	    cotsDb.transaction(function(transaction) {
 		transaction.executeSql(sql.SELECT, [id], function(transaction, results) {
-			console.log("select cots: "+results.rows.length);
+			//console.log("select cots: "+results.rows.length);
 			for(i=0; i<results.rows.length;i++){
 				// parse results in JSON
 		    		var item = JSON.stringify(results.rows.item(i));
@@ -125,7 +125,7 @@ var db = {
 				db.sendRemote(item,results.rows.item(i).id,from);			
 			}
 		}, function(e) {
-		    console.log("some error getting questions");
+		    //console.log("some error getting questions");
 		});
 	    });
 	},
@@ -162,9 +162,9 @@ var db = {
 	    var cotsDb = db.openDB();
 	    cotsDb.transaction(function(transaction) {
 		transaction.executeSql(sql.REMOVE, [id], function(transaction, results) {
-		    console.log("update COTs status to synchronized ok");		    
+		    //console.log("update COTs status to synchronized ok");		    
 		}, function(transaction, error) {		    
-		    console.log("some error updating data "+error.message);
+		    //console.log("some error updating data "+error.message);
 		});
 	    });
 	},
@@ -173,10 +173,10 @@ var db = {
 	    var cotsDb = db.openDB();
 	    cotsDb.transaction(function(transaction) {
 		transaction.executeSql(sql.DELETE, [], function(transaction, results) {
-		    console.log("delete COTs ok");
+		    //console.log("delete COTs ok");
 		    return 1;
 		}, function(transaction,error) {		    
-		    console.log("some error updating data: "+error.message);
+		    //console.log("some error updating data: "+error.message);
 		    return 0;
 		});
 	    });
@@ -188,7 +188,7 @@ var db = {
 	var cotsDb = db.openDB();
         cotsDb.transaction(function(transaction) {
         transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
-            console.log("Nombre de formulaire(s) existant "+ results.rows.length);
+            //console.log("Nombre de formulaire(s) existant "+ results.rows.length);
             if (results.rows.length != 0){
             	app.cancel();
             }
@@ -197,7 +197,7 @@ var db = {
             }
     
         }, function(transaction,error) {		    
-		    console.log("some error updating data: "+error.message);
+		    //console.log("some error updating data: "+error.message);
 		    return 0;
 		});
     });
@@ -209,14 +209,14 @@ var db = {
 	var cotsDb = db.openDB();
         cotsDb.transaction(function(transaction) {
         transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
-            console.log("Liste exist "+results.rows.length);
+            //console.log("Liste exist "+results.rows.length);
             if(results.rows.length !=0){
             	//On affiche bouton retour
             	document.getElementById("btn-cancel").id = "btn-cancel-on";
             }
     
         }, function(transaction,error) {		    
-		    console.log("some error updating data: "+error.message);
+		    //console.log("some error updating data: "+error.message);
 		    return 0;
 		});
     });
@@ -228,7 +228,7 @@ var db = {
 	var cotsDb = db.openDB();
         cotsDb.transaction(function(transaction) {
         transaction.executeSql(sql.SELECTexistLIST, [], function(transaction, results) {
-            console.log("Liste exist "+results.rows.length);
+            //console.log("Liste exist "+results.rows.length);
             if(results.rows.length !=0){
             	//retour a la liste a la fin de finaliser ou nouveau
                 document.getElementById("lien-reload").innerHTML = "Back to the list";
@@ -236,7 +236,7 @@ var db = {
             }
     
         }, function(transaction,error) {		    
-		    console.log("some error updating data: "+error.message);
+		    //console.log("some error updating data: "+error.message);
 		    return 0;
 		});
     });
@@ -251,7 +251,7 @@ var db = {
 	var cotsDb = db.openDB();
         cotsDb.transaction(function(transaction) {
         transaction.executeSql(sql.SELECTCOTLIST, [], function(transaction, results) {
-            console.log("Nombre de formulaire(s) a consulter "+ results.rows.length);
+            //console.log("Nombre de formulaire(s) a consulter "+ results.rows.length);
 
         	app.updateMsg("You have " + results.rows.length + " form(s) to complete. Thank you for helping us to protect Vanuatu's reefs.");
 
@@ -273,7 +273,7 @@ var db = {
                }
     
         }, function(transaction,error) {		    
-		    console.log("some error updating data: "+error.message);
+		    //console.log("some error updating data: "+error.message);
 		    return 0;
 		});
     });
@@ -285,7 +285,7 @@ var db = {
         var cotsDb = db.openDB();
         cotsDb.transaction(function(transaction) {
         transaction.executeSql(sql.SELECTreditCOTForm, [id], function(transaction, results) {
-            console.log("resultat "+ results.rows.length);
+            //console.log("resultat "+ results.rows.length);
 
               for (i = 0; i < results.rows.length; i++){
 

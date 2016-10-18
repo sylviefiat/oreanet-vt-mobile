@@ -31,7 +31,7 @@ var app = {
             function(){
                 //On remet le splascreen
                 document.getElementById("devicereadyoff").id = "deviceready";
-                console.log("On remet le splascreen");
+                //console.log("On remet le splascreen");
                 //On est sur la page index.html et offline
                 //On enlève online 
                 document.getElementById("online").style.display = "none";
@@ -41,7 +41,7 @@ var app = {
                 document.getElementById("lien-site-menu").id = "lien-site-menu-off";
                 //On affiche le formulaire
                 document.getElementById("contentoff").id = "content";
-                console.log("On affiche le formulaire");
+                //console.log("On affiche le formulaire");
              },
             // si on EST connecté
             function(){
@@ -49,16 +49,16 @@ var app = {
                 if(app.getUrlVars()["id"] == null){
                     //on remet le splascreen
                     document.getElementById("devicereadyoff").id = "deviceready";
-                    console.log("On remet le splascreen");
+                    //console.log("On remet le splascreen");
                     //On vérifie l’existence d'une liste
                     setTimeout(function(){ db.listCOTexist();},1000);
                     //On affiche le formulaire
                     document.getElementById("contentoff").id = "content";
-                    console.log("On affiche le formulaire");
+                    //console.log("On affiche le formulaire");
                 }else {
                     //On affiche le formulaire
                     document.getElementById("contentoff").id = "content";
-                    console.log("On affiche le formulaire");
+                    //console.log("On affiche le formulaire");
                 }
             }
         );
@@ -101,6 +101,29 @@ var app = {
         app.turnOffline();
     },
 
+    // direct validation of the form 
+    checkStatus: function(e){
+        var idForm = app.getUrlVars()["id"],
+            elems = $('form').find('input:required'),
+            invalid = $.grep(elems, function(n){
+                return(!n.attributes['disabled'] && !n.validity.valid);
+            }),
+            bool = $(invalid).size() == 0;
+        document.getElementById("btn-send").className = "fa fa-paper-plane col-xs-3 "+(bool?"valid":"invalid");
+        // si c'est un formulaire existant qu'on reprend alors on affiche les champs a completer        
+        if(bool){
+            app.closeMsg();
+            $(elems).removeClass("error");
+        } else {
+            if(idForm!="" && idForm!=null){
+                app.updateMsg("Your form is incomplete. There are "+ $(invalid).size() +" field(s) missing. "
+                    +"<a href='#' onclick='return app.cancel()'>Back to the list</a>");
+            }
+            $(invalid).addClass("error");
+        }
+        
+    },
+
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         
@@ -108,13 +131,15 @@ var app = {
         if(app.getUrlVars()["id"] == null) {
             setTimeout(function(){
 
-                console.log("<<<<<formulaire non existant>>>>");
+                //console.log("<<<<<formulaire non existant>>>>");
 
                 if(document.getElementById("deviceready") != null){
                     
                     //On enleve les champs Select/Regi/Pays/Lat/Long
                     document.getElementById("offlineForm").style.display = "none";
-                    // enlevé le splashscreen et affiche le formulaire
+                    // on met les input cachés en disabled
+                    $('#offlineForm').find('input').attr("disabled", true);                    
+                    // enleve le splashscreen et affiche le formulaire
                     app.open();
                 }
                 // supprime tout message afficher (si il y en a)
@@ -126,20 +151,23 @@ var app = {
                 // ajouter un "validateur" de formulaire
                 app.validForm();
 
+                $('input').change(app.checkStatus);
+
                 //test les champs valid
-                var myVar = setInterval(function(){
-                    console.log("validation");
+                /*var myVar = setInterval(function(){
+                    //console.log("validation");
                     if($("#form-cot_admin" ).valid()){
                         if(document.getElementById("btn-send") != null){
-                            document.getElementById("btn-send").id = "btn-send-valid";
+                            document.getElementById("btn-send").classname = "fa fa-paper-plane col-xs-3 valid";
                         }
                     } 
                     else {
-                        if(document.getElementById("btn-send-valid") != null){
-                            document.getElementById("btn-send-valid").id = "btn-send";
+                        if(document.getElementById("btn-send") != null){
+                            document.getElementById("btn-send").classname = "fa fa-paper-plane col-xs-3 invalid";
                         }
                     }
-                }, 2000);
+                }, 2000);*/
+
 
             }, 2000);
 
@@ -148,7 +176,7 @@ var app = {
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
             
-            console.log("<<<<<formulaire non existant>>>>");
+            //console.log("<<<<<formulaire non existant>>>>");
 
             // supprime tout message afficher (si il y en a)
             app.closeMsg();
@@ -159,20 +187,22 @@ var app = {
             // ajouter un "validateur" de formulaire
             app.validForm();
 
+            $('input').change(app.checkStatus);
+
             //test les champs valid
-            var myVar = setInterval(function(){
-                console.log("validation");
+            /*var myVar = setInterval(function(){
+                //console.log("validation");
                 if($("#form-cot_admin" ).valid()){
                     if(document.getElementById("btn-send") != null){
-                        document.getElementById("btn-send").id = "btn-send-valid";
+                        document.getElementById("btn-send").classname = "fa fa-paper-plane col-xs-3 valid";
                     }
                 } 
                 else {
-                    if(document.getElementById("btn-send-valid") != null){
-                        document.getElementById("btn-send-valid").id = "btn-send";
+                    if(document.getElementById("btn-send") != null){
+                        document.getElementById("btn-send").classname = "fa fa-paper-plane col-xs-3 invalid";
                     }
                 }
-            }, 1000);
+            }, 1000);*/
 
             //teste liste exist ajout du retour a la liste
             db.listExistNewForm();
@@ -182,39 +212,40 @@ var app = {
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
+                var id = app.getUrlVars()["id"];
+                //console.log("<<<<<formulaire existant>>>>");
+                //On affiche bouton retour
+                document.getElementById("btn-cancel").id = "btn-cancel-on";
+                // démarrer le plugin addressPicker
+                app.addressPicker();
+                // remplir avec ces données le formulaire            
+                db.reditCOTForm(id);
+                //console.log("new index ==== "+ id);
+                // ajouter un listener sur le formulaire avec l'id de celui-ci
+                app.addSubmitExistForm(id);
+                // ajouter un "validateur" de formulaire
+                app.validForm();
 
-            console.log("<<<<<formulaire existant>>>>");
-
-            //On affiche bouton retour
-            document.getElementById("btn-cancel").id = "btn-cancel-on";
-            // démarrer le plugin addressPicker
-            app.addressPicker();
-            // remplir avec ces données le formulaire
-            db.reditCOTForm(app.getUrlVars()["id"]);
-            console.log("new index ==== "+ app.getUrlVars()["id"]);
-            // ajouter un listener sur le formulaire avec l'id de celui-ci
-            app.addSubmitExistForm(app.getUrlVars()["id"]);
-            // ajouter un "validateur" de formulaire
-            app.validForm();
+                $('input').change(app.checkStatus);
 
             //test les champs valid
-            var myVar = setInterval(function(){
-                console.log("validation");
+            /*var myVar = setInterval(function(){
+                //console.log("validation");
                 if($("#form-cot_admin" ).valid()){
                     //message pour le formulaire sélectionné
                     app.updateMsg("<a href='#' onclick='return app.cancel()'>Back to the list</a>");
                     if(document.getElementById("btn-send") != null){
-                        document.getElementById("btn-send").id = "btn-send-valid";
+                        document.getElementById("btn-send").classname = "fa fa-paper-plane col-xs-3 valid";
                     }
                 } 
                 else {
                     //message pour le formulaire sélectionné
                     app.updateMsg("Your form is incomplete. There are "+ $("#form-cot_admin" ).validate().numberOfInvalids() +" field(s) missing. <a href='#' onclick='return app.cancel()'>Back to the list</a>");
-                    if(document.getElementById("btn-send-valid") != null){
-                        document.getElementById("btn-send-valid").id = "btn-send";
+                    if(document.getElementById("btn-send") != null){
+                        document.getElementById("btn-send").classname = "fa fa-paper-plane col-xs-3 invalid";
                     }
                 }
-            }, 1000);
+            }, 1000);*/
 
             }, 0);
         }
@@ -246,43 +277,46 @@ var app = {
                     document.getElementById('counting_method_distance_swim').value = distance_swim;
                     document.getElementById('counting_method_other').value = other_chbx;
                     if(range.includes("shallow") == true){
-                        console.log("shallow");
+                        //console.log("shallow");
                         document.getElementById("depth_range0").checked = true;
-                        document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+                        //document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
                     } 
 
                     if(range.includes("medium") == true){
-                        console.log("medium");
+                        //console.log("medium");
                         document.getElementById("depth_range1").checked = true;
-                        document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+                        //document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
                     }
 
                     if(range.includes("deep") == true){
-                        console.log("deep");
+                        //console.log("deep");
                         document.getElementById("depth_range2").checked = true;
-                        document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+                        //document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
                     }
 
                     if(method.includes("snorkelling") == true){
-                        console.log("snorkelling");
+                        //console.log("snorkelling");
                        document.getElementById("observation_method0").checked = true;
-                       document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+                       //document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
                     }
 
                     if (method.includes("scuba diving") == true){
-                        console.log("scuba diving");
+                        //console.log("scuba diving");
                         document.getElementById("observation_method1").checked = true;
-                        document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+                        //document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
                     }
 
                     document.getElementById('remarks').value = remarks;
+
+                    // validate le formulaire pour afficher les champs non remplis
+                    app.checkStatus();
     },
 
     //supprime un formulaire avec son id
     supprForm: function(id){
         if (confirm("Do you want to delete the form?")) {
            db.updateCOT(id);
-           console.log("element supprimer id="+id);
+           //console.log("element supprimer id="+id);
            window.setTimeout("window.location.reload()", 500);
        }
         
@@ -308,7 +342,7 @@ var app = {
     },
     // Remove splascreen
     open: function(){
-        console.log("OPEN");
+        //console.log("OPEN");
 
         var parentElement = document.getElementById("deviceready");
         var listeningElement = parentElement.querySelector('.listening');
@@ -322,7 +356,7 @@ var app = {
     },
    // Sending form wait splashscreen
     sending: function(){
-        console.log("SENDING");
+        //console.log("SENDING");
         window.scrollTo(0, 0);
         //test online ou offline
         app.isOnline(
@@ -354,7 +388,7 @@ var app = {
 
     // ser closing screen
     close: function(){
-        console.log("CLOSE");
+        //console.log("CLOSE");
 
         window.scrollTo(0, 0);
         //test online ou offline
@@ -481,7 +515,7 @@ var app = {
     //On utilise la fonction sql pour enregistrer les données
     addSubmitForm: function(){
         $('#form-cot_admin').submit(function() {
-        console.log("form submit");
+        //console.log("form submit");
         db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
             $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
             $('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
@@ -500,7 +534,7 @@ var app = {
     //on utilise la fonction sql pour modifier les données
     addSubmitExistForm: function(id){
         $('#form-cot_admin').submit(function() {
-        console.log("form submit");
+        //console.log("form submit");
         db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
             $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
             $('#observation_pays').val(), $('#observation_latitude').val(), $('#observation_longitude').val(),
@@ -587,7 +621,7 @@ var app = {
                 no();
             }
         }
-    xhr.open("GET","http://rest-oreanet.ird.nc/restcotnc/cot-vt.php",true);
+        xhr.open("GET","http://rest-oreanet.ird.nc/restcotnc/cot-vt.php",true);
         xhr.send();
     },
 
