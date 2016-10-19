@@ -20,11 +20,24 @@
 
 /* gloabl app management */
 var app = {
+   switchOnline: function(isOnline){
+        if(isOnline){
+            online=document.getElementById("onlinelist");
+            online.innerText = " online";
+            online.className = "ui-btn ui-btn-icon-right fa fa-signal online";
+            online.removeAttribute("disabled");
+        } else {
+            online=document.getElementById("onlinelist");
+            online.innerText = " offline";
+            online.className = "ui-btn ui-btn-icon-right fa fa-signal";
+            online.setAttribute("disabled","disabled");
+        }
+    },
     // Application Constructor
     initialize: function() {        
         this.bindEvents();
         //On enlève offline
-        document.getElementById("offline").style.display = "none";
+        app.switchOnline(1);
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
@@ -33,10 +46,7 @@ var app = {
                 document.getElementById("devicereadyoff").id = "deviceready";
                 //console.log("On remet le splascreen");
                 //On est sur la page index.html et offline
-                //On enlève online 
-                document.getElementById("online").style.display = "none";
-                //On affiche offline
-                document.getElementById("offline").style.display = "block";
+                app.switchOnline(0);
                 //On enlève le lien site dans le menu
                 document.getElementById("lien-site-menu").id = "lien-site-menu-off";
                 //On affiche le formulaire
@@ -47,6 +57,7 @@ var app = {
             function(){
                 //Si on est sur la page index.html et on est online alors
                 if(app.getUrlVars()["id"] == null){
+                    app.switchOnline(1);
                     //on remet le splascreen
                     document.getElementById("devicereadyoff").id = "deviceready";
                     //console.log("On remet le splascreen");
@@ -64,16 +75,14 @@ var app = {
         );
 
         //dev mobile
-        //setTimeout(function(){app.receivedEvent('deviceready');},0);
+        setTimeout(function(){app.receivedEvent('deviceready');},0);
     
     },
 
     //Initialisation list.html
     initializeList: function() {
         //On affiche online
-        document.getElementById("offline").style.display = "none";
-        //On prend onlinelist css
-        document.getElementById("online").id = "onlinelist";
+        app.switchOnline(1);
 
         var parentElement = document.getElementById("contentlist");
         var listeningElement = parentElement.querySelector('.cot_admin_list');
@@ -109,7 +118,7 @@ var app = {
                 return(!n.attributes['disabled'] && !n.validity.valid);
             }),
             bool = $(invalid).size() == 0;
-        document.getElementById("btn-send").className = "fa fa-paper-plane col-xs-3 "+(bool?"valid":"invalid");
+        document.getElementById("btn-send").className = "fa fa-paper-plane ui-btn ui-last-child "+(bool?"valid":"invalid");
         // si c'est un formulaire existant qu'on reprend alors on affiche les champs a completer        
         if(bool){
             app.closeMsg();
@@ -334,11 +343,15 @@ var app = {
     // Turn app to online mode
     turnOnline: function(){
         app.addressPicker();
-    app.reloadForm();
+        online=document.getElementById("onlinelist");
+        app.switchOnline(1);
+        online.addClass = "online";
+        app.reloadForm();
     },
     // Turn app to offline mode
     turnOffline: function(){
         app.updateMsg("Application is offline, some functionnality won't be available and forms will be sent when internet will be available.");
+        app.switchOnline(0);
     },
     // Remove splascreen
     open: function(){
@@ -426,12 +439,13 @@ var app = {
 
     updateMsg: function(msg) {
         document.getElementById("msg").innerHTML = msg;
-    document.getElementById("system-message-container").style.display = "block";
+        document.getElementById("system-message-container").style.display = "block";
     },    
 
     showInfoMsg: function() {
         msg = "Analysing acanthasters presence helps us to understand how to act. In providing us information about acanthaster, you will help us protect Vanuatu's reefs.";
-    app.updateMsg(msg);
+        app.updateMsg(msg);
+        $("#navbar").collapsible('collapse');
     }, 
 
     closeMsg: function() {
@@ -551,9 +565,9 @@ var app = {
     },
 
     submitForm: function(){
-        if($("#form-cot_admin" ).valid()){
+        if($("#form-cot_admin").valid()){
             app.sending();
-            $("#form-cot_admin" ).submit();
+            $("#form-cot_admin").submit();
         
             //test online ou offline
             app.isOnline(
