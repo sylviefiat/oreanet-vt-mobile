@@ -543,6 +543,7 @@ addressPicker: function(){
     },
 
     saveForm: function(){
+        event.preventDefault();
         if(app.getID()==null || app.getID()==""){
             db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
                 $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
