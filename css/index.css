@@ -538,9 +538,6 @@ input[type=checkbox], input[type=radio] {
   
 /*Cancel button*/
 #btn-cancel {
-    display:none;
-}
-#btn-cancel-on {
     text-align: center;
     height: 18px;
     background: #EEEEEE;
@@ -552,11 +549,11 @@ input[type=checkbox], input[type=radio] {
     border-bottom: 3px groove #DBD7D7;
 
 }
-#btn-cancel-on a{
+#btn-cancel a{
     display: block;
     padding-top: 12px;
 }
-#btn-cancel-on a:link 
+#btn-cancel a:link 
 { 
  text-decoration:none; 
 } 
