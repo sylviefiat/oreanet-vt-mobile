@@ -77,6 +77,10 @@ body {
     line-height:20px;
 }
 
+.custom-navbar .ui-btn-right button {
+    min-height:16px;
+}
+
 /*send button*/
 #btn-send.invalid {
     color: #555559 !important;
