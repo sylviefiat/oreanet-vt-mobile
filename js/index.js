@@ -75,7 +75,7 @@
             );
 
         //dev mobile
-        setTimeout(function(){app.receivedEvent('deviceready');},0);
+        //setTimeout(function(){app.receivedEvent('deviceready');},0);
 
     },
 
@@ -112,7 +112,7 @@
 
     // direct validation of the form 
     checkStatus: function(e){
-        var idForm = app.getUrlVars()["id"],
+        var idform = app.getUrlVars()["id"],
         elems = $('form').find('input:required'),
         invalid = $.grep(elems, function(n){
             return(!n.attributes['disabled'] && !n.validity.valid);
@@ -124,10 +124,10 @@
             app.closeMsg();
             $(elems).removeClass("error");
         } else {
-            if(idForm!="" && idForm!=null){
-                app.updateMsg("Your form is incomplete. There are "+ $(invalid).size() +" field(s) missing. "
+            //if(idform!="" && idform!=null){
+                app.updateMsg("ID form "+idform+" Your form is incomplete. There are "+ $(invalid).size() +" field(s) missing. "
                     +"<a href='#' onclick='return app.cancel()'>Back to the list</a>");
-            }
+            //}
             $(invalid).addClass("error");
         }
         
