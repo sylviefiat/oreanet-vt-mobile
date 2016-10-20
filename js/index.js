@@ -386,8 +386,14 @@
     
     // Reload form
     reloadForm: function() {
-       $("#form-cot_admin").trigger('reset');
-       window.location.href="./index.html";
+        app.isOnline(
+            function(){
+                $("#form-cot_admin").trigger('reset');
+                window.location.href="./index.html";
+            }, 
+            function(){
+                app.getFormID("");
+            });     
    },
 
    updateMsg: function(msg) {
