@@ -113,7 +113,7 @@ if(!bg){
 		}
 		
 		radius = radius || that.settings.distanceWidgetRadius;
-		console.log(radius);
+		//console.log(radius);
 		var circle =  new google.maps.Circle({
 			center: mapOptions.center,
 			radius: radius, // Km
@@ -411,7 +411,7 @@ if(!bg){
 		    	i=0;
 		    }
 		    var address = geocoderResults[i].formatted_address;
-		    that.$element.val(address);
+		    that.$element.val(address).change();
 		    that.addressMapping[address] = geocoderResults[i];
 		    that.updater(address,query);
 		}
@@ -455,7 +455,7 @@ if(!bg){
             if (typeof method === 'string' && addressPickerByGiro[method]) {
                 return addressPickerByGiro[method].apply(addressPickerByGiro, Array.prototype.slice.call(arguments, 1));
             }
-            return console.log('Method ' +  method + ' does not exist on jQuery.addressPickerByGiro');
+            return //console.log('Method ' +  method + ' does not exist on jQuery.addressPickerByGiro');
         } else {
             if (!method || typeof method === 'object') {
 				
@@ -469,7 +469,7 @@ if(!bg){
 
 				return this;
             }
-            return console.log('jQuery.addressPickerByGiro is not instantiated. Please call $("selector").addressPickerByGiro({options})');
+            return //console.log('jQuery.addressPickerByGiro is not instantiated. Please call $("selector").addressPickerByGiro({options})');
         }
     };
 
