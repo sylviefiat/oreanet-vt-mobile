@@ -60,7 +60,7 @@ var db = {
 			            },
 			            // si on EST connecté
 			            function(){
-			            	db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+			            	return db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
 																observation_localisation, observation_region, observation_country, 
 																observation_latitude, observation_longitude, observation_number, observation_culled, 
 																counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -97,7 +97,7 @@ var db = {
 					
 					var idform = results.rows.item(i).id;
 					//console.log("Id ======"+ idform);
-					return idform;//db.synchronizeCOTs("form", idform);
+					return db.synchronizeCOTs("form", idform);
 				}
 			}, function(transaction, error) {		    
 		    	console.log("some error updating data "+error.message);
@@ -346,7 +346,7 @@ var db = {
 					depth_range, observation_method, 
 					remarks, id], 
 				function(transaction, results) {
-					//db.synchronizeCOTs("form", id);	
+					db.synchronizeCOTs("form", id);	
 				}, function(e) {
 		    		
 				}
