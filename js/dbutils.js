@@ -210,7 +210,10 @@ var db = {
 	            //console.log("Liste exist "+results.rows.length);
 	            if(results.rows.length !=0){
 	            	//On affiche bouton retour
-	            	document.getElementById("btn-cancel").id = "btn-cancel-on";
+	            	//document.getElementById("btn-cancel").id = "btn-cancel-on";
+	            	if($('#btn-cancel').length){  
+					  $('#btn-cancel').show();
+					}
 	            }
 	    
 	        }, function(transaction,error) {		    

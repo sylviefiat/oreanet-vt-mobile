@@ -124,10 +124,10 @@
             app.closeMsg();
             $(elems).removeClass("error");
         } else {
-            //if(idform!="" && idform!=null){
-                app.updateMsg("ID form "+idform+" Your form is incomplete. There are "+ $(invalid).size() +" field(s) missing. "
+            if(idform!="" && idform!=null){
+                app.updateMsg("Your form is incomplete. There are "+ $(invalid).size() +" field(s) missing. "
                     +"<a href='#' onclick='return app.cancel()'>Back to the list</a>");
-            //}
+            }
             $(invalid).addClass("error");
         }
         
@@ -168,24 +168,17 @@
         //sinon si l'ID dans url est égal a "" alors c'est un nouveau formulaire dans index.html?id=
         else if(app.getUrlVars()["id"] == "") {
             setTimeout(function(){
-
-            //console.log("<<<<<formulaire non existant>>>>");
-
-            // supprime tout message afficher (si il y en a)
-            app.closeMsg();
-            // démarrer le plugin addressPicker
-            app.addressPicker();
-            // ajouter un listener sur le formulaire
-            app.addSubmitForm();
-            // ajouter un "validateur" de formulaire
-            app.validForm();
-
-            $('input:required').change(app.checkStatus);
-
-            //teste liste exist ajout du retour a la liste
-            db.listExistNewForm();
-
-        }, 0);
+                //console.log("<<<<<formulaire non existant>>>>");
+                // supprime tout message afficher (si il y en a)
+                app.closeMsg();
+                // démarrer le plugin addressPicker
+                app.addressPicker();
+                // ajouter un listener sur le formulaire
+                app.addSubmitForm();
+                // ajouter un "validateur" de formulaire
+                app.validForm();
+                $('input:required').change(app.checkStatus);
+            }, 0);
         }
         //sinon on modifie un formulaire existant
         else {
@@ -196,15 +189,23 @@
                 app.addressPicker();
                 // remplir avec ces données le formulaire            
                 db.reditCOTForm(id);
+
                 //console.log("new index ==== "+ id);
                 // ajouter un listener sur le formulaire avec l'id de celui-ci
                 app.addSubmitExistForm(id);
                 // ajouter un "validateur" de formulaire
                 app.validForm();
 
-                $('input').change(app.checkStatus);
+                $('input:required').change(app.checkStatus);
+                
+                //teste liste exist ajout du retour a la liste
+                db.listExistNewForm();
+                // validate le formulaire pour afficher les champs non remplis
+                app.checkStatus();
 
             }, 0);
+            //teste liste exist ajout du retour a la liste
+            db.listExistNewForm();
         }
     },
 
@@ -219,7 +220,8 @@
     },
 
     //on remplit le formulaire chargé avec ces données
-    reditForm: function(name,tel,email,day,month,year,location,localisation,region,country,latitude,longitude,number,culled,timed_swim,distance_swim,other_chbx,range,method,remarks){
+    reditForm: function(name,tel,email,day,month,year,location,localisation,region,country,latitude,longitude,number,culled,
+        timed_swim,distance_swim,other_chbx,range,method,remarks){
 
         document.getElementById('observer_name').value = name;
         document.getElementById('observer_tel').value = tel;
@@ -239,40 +241,38 @@
         document.getElementById('counting_method_distance_swim').value = distance_swim;
         document.getElementById('counting_method_other').value = other_chbx;
         if(range.includes("shallow") == true){
-                        //console.log("shallow");
-                        document.getElementById("depth_range0").checked = true;
-                        //document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    } 
+            //console.log("shallow");
+            document.getElementById("depth_range0").checked = true;
+            //document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        } 
 
-                    if(range.includes("medium") == true){
-                        //console.log("medium");
-                        document.getElementById("depth_range1").checked = true;
-                        //document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    }
+        if(range.includes("medium") == true){
+            //console.log("medium");
+            document.getElementById("depth_range1").checked = true;
+            //document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        }
 
-                    if(range.includes("deep") == true){
-                        //console.log("deep");
-                        document.getElementById("depth_range2").checked = true;
-                        //document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    }
+        if(range.includes("deep") == true){
+            //console.log("deep");
+            document.getElementById("depth_range2").checked = true;
+            //document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        }
 
-                    if(method.includes("snorkelling") == true){
-                        //console.log("snorkelling");
-                        document.getElementById("observation_method0").checked = true;
-                       //document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                   }
+        if(method.includes("snorkelling") == true){
+            //console.log("snorkelling");
+            document.getElementById("observation_method0").checked = true;
+            //document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        }
 
-                   if (method.includes("scuba diving") == true){
-                        //console.log("scuba diving");
-                        document.getElementById("observation_method1").checked = true;
-                        //document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
-                    }
+        if (method.includes("scuba diving") == true){
+            //console.log("scuba diving");
+            document.getElementById("observation_method1").checked = true;
+            //document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+        }
 
-                    document.getElementById('remarks').value = remarks;
+        document.getElementById('remarks').value = remarks;
 
-                    // validate le formulaire pour afficher les champs non remplis
-                    app.checkStatus();
-                },
+    },
 
     //supprime un formulaire avec son id
     supprForm: function(id){
