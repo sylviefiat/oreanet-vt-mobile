@@ -489,7 +489,7 @@ addressPicker: function(){
     addSubmitForm: function(){
         $('#form-cot_admin').submit(function() {
             //console.log("form submit");
-            idform = db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
+            db.insertCOT($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
                 $('#observation_location').val(), $('#observation_localisation').val(), $('#observation_region').val(), 
                 $('#observation_pays').val(),$('#observation_latitude').val(),$('#observation_longitude').val(),
                 $('#observation_number').val(),$('#observation_culled').val(),
@@ -500,7 +500,7 @@ addressPicker: function(){
                 $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
                 $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
                 $('#remarks').val(), app.getDateTime());
-            db.synchronizeCOTs("form", idform);             
+                         
             return false;
         }); 
     },
@@ -521,7 +521,7 @@ addressPicker: function(){
                 $('#observation_method0').prop('checked')?$('#observation_method0').val():"",
                 $('#observation_method1').prop('checked')?$('#observation_method1').val():"",
                 $('#remarks').val(), id);    
-            db.synchronizeCOTs("form", id);      
+                 
             return false;
         }); 
     },
