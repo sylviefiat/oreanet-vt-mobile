@@ -628,7 +628,7 @@ addressPicker: function(){
                 no();
             }
         }
-        xhr.open("GET","http://rest-oreanet.ird.nc/restcotnc/cot-vt.php",true);
+        xhr.open("GET","http://fisheries.gov.vu/restcotnc_fisheries/cot-vt.php",true);
         xhr.send();
     },
 
