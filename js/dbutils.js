@@ -137,7 +137,8 @@ var db = {
 
 	sendRemote: function(json,id,from){
 		xhr = new XMLHttpRequest();
-		var url = "http://vcot-monitoring.ird.nc/fisheries/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=02e788534b81a1d354e85a5002d4be5d"
+		//var url = "http://oreanet-rest.ird.nc/restcotnc/cot.php";
+		var url = "https://fisheries.gov.vu/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=025b601f76594ecd73ea1727870c5d34";
 		xhr.open("POST", url, true);
 		//xhr.setRequestHeader("Content-type", "application/json");
 		xhr.onreadystatechange = function () { 
