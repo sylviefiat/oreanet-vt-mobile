@@ -26,7 +26,7 @@
     -->   
     
     <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
-    <gap:allow-navigation href="fisheries-rest.gov.vu/*" />
+    <gap:allow-navigation href="http://fisheries.gov.vu/*" />
     <gap:allow-navigation href="./index.html" />
     <gap:allow-navigation href="./list.html" />
     <gap:allow-navigation href="./index.html?id=" />
