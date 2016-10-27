@@ -200,12 +200,8 @@
                 
                 //teste liste exist ajout du retour a la liste
                 db.listExistNewForm();
-                // validate le formulaire pour afficher les champs non remplis
-                app.checkStatus();
 
             }, 0);
-            //teste liste exist ajout du retour a la liste
-            db.listExistNewForm();
         }
     },
 
@@ -272,6 +268,8 @@
 
         document.getElementById('remarks').value = remarks;
 
+        // validate le formulaire pour afficher les champs non remplis
+        app.checkStatus();
     },
 
     //supprime un formulaire avec son id
