@@ -243,31 +243,31 @@
         if(range.includes("shallow") == true){
             //console.log("shallow");
             document.getElementById("depth_range0").checked = true;
-            //document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_depth_range0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         } 
 
         if(range.includes("medium") == true){
             //console.log("medium");
             document.getElementById("depth_range1").checked = true;
-            //document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_depth_range1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         }
 
         if(range.includes("deep") == true){
             //console.log("deep");
             document.getElementById("depth_range2").checked = true;
-            //document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_depth_range2").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         }
 
         if(method.includes("snorkelling") == true){
             //console.log("snorkelling");
             document.getElementById("observation_method0").checked = true;
-            //document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_observation_method0").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         }
 
         if (method.includes("scuba diving") == true){
             //console.log("scuba diving");
             document.getElementById("observation_method1").checked = true;
-            //document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
+            document.getElementById("label_observation_method1").className = "ui-btn ui-corner-all ui-btn-inherit ui-btn-icon-left ui-first-child ui-checkbox-on";
         }
 
         document.getElementById('remarks').value = remarks;
@@ -507,7 +507,6 @@ addressPicker: function(){
 
     //on utilise la fonction sql pour modifier les données
     addSubmitExistForm: function(id){
-        if(id==null || id==""){id=app.getID();}
         $('#form-cot_admin').submit(function() {
             //console.log("form submit");
             db.updateFormCot($('#observer_name').val(), $('#observer_tel').val(), $('#observer_email').val(), $('#observation_day').val(), $('#observation_month').val(), $('#observation_year').val(),
