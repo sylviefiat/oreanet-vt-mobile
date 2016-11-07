@@ -20,24 +20,26 @@
 
  /* gloabl app management */
  var app = {
-   switchOnline: function(isOnline){
-    if(isOnline){
-        online=document.getElementById("onlinelist");
-        online.innerText = " online";
-        online.className = "ui-btn ui-btn-icon-right fa fa-signal online";
-        online.removeAttribute("disabled");
-    } else {
-        online=document.getElementById("onlinelist");
-        online.innerText = " offline";
-        online.className = "ui-btn ui-btn-icon-right fa fa-signal";
-        online.setAttribute("disabled","disabled");
-    }
-},
+    switchOnline: function(isOnline){
+        if(isOnline){
+            online=document.getElementById("onlinelist");
+            online.innerText = " online";
+            online.className = "ui-btn ui-btn-icon-right fa fa-signal online";
+            online.removeAttribute("disabled");
+        } else {
+            online=document.getElementById("onlinelist");
+            online.innerText = " offline";
+            online.className = "ui-btn ui-btn-icon-right fa fa-signal";
+            online.setAttribute("disabled","disabled");
+        }
+    },
     // Application Constructor
     initialize: function() {        
         this.bindEvents();
         //On enlève offline
         app.switchOnline(1);
+        // supprime tout message afficher (si il y en a)
+        app.closeMsg();
         //test online ou offline
         app.isOnline(
             // si on N'EST PAS connecté alors
