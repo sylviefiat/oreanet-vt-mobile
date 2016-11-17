@@ -541,7 +541,7 @@ input[type=checkbox], input[type=radio] {
 }
   
 /*Cancel button*/
-#btn-cancel-save {
+#btns-cancel-save {
     text-align: center;
     height: 6%;
     background: #EEEEEE;

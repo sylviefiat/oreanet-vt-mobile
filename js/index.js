@@ -80,7 +80,7 @@
             );
 
         //dev mobile
-        setTimeout(function(){app.receivedEvent('deviceready');},0);
+        //setTimeout(function(){app.receivedEvent('deviceready');},0);
 
     },
 
@@ -182,7 +182,11 @@
                 app.addSubmitForm();
                 // ajouter un "validateur" de formulaire
                 app.validForm();
+
                 $('input:required').change(app.checkStatus);
+                
+                //teste liste exist ajout du retour a la liste
+                db.listExistNewForm();
             }, 0);
         }
         //sinon on modifie un formulaire existant
