@@ -331,7 +331,7 @@ var db = {
     		}
         }, null);
         });
-    }
+    },
     
     //On modifier un tuple déjà existant grâce a son id
     updateFormCot: function(observer_name, observer_tel, observer_email, 
