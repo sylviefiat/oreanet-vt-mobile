@@ -676,7 +676,7 @@
                 no();
             }
         }
-        xhr.open("GET","http://rest-oreanet.ird.nc/restcotnc/cot-vt.php",true);
+        xhr.open("GET","http://vcot-monitoring/fisheries/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=02e788534b81a1d354e85a5002d4be5d",true);
         xhr.send();
     },
 
