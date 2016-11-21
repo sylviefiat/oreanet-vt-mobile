@@ -676,7 +676,7 @@
                 no();
             }
         }
-        xhr.open("GET","http://vcot-monitoring/fisheries/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=02e788534b81a1d354e85a5002d4be5d",true);
+        xhr.open("GET","http://fisheries.gov.vu/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=025b601f76594ecd73ea1727870c5d34",true);
         xhr.send();
     },
 
