@@ -541,9 +541,9 @@ input[type=checkbox], input[type=radio] {
 }
   
 /*Cancel button*/
-#btn-cancel {
+#btns-cancel-save {
     text-align: center;
-    height: 18px;
+    height: 6%;
     background: #EEEEEE;
     font-weight: bold;
     font-size: 18px;
@@ -553,14 +553,17 @@ input[type=checkbox], input[type=radio] {
     border-bottom: 3px groove #DBD7D7;
 
 }
-#btn-cancel a{
-    display: block;
-    padding-top: 12px;
+
+@media (min-width: 480px) {
+    #btn-cancel {
+      display: inline;
+      width: 40%;
+    }
+    #btn-save {
+      display: inline;
+      width: 40%;
+    } 
 }
-#btn-cancel a:link 
-{ 
- text-decoration:none; 
-} 
 
 /*lien site web*/
 #lien-site-web-off{

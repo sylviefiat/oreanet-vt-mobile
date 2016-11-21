@@ -31,8 +31,8 @@ var db = {
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
-				depth_range0, depth_range1, depth_range2, observation_method0, observation_method1, remarks, date_enregistrement) {
-		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+				depth_range0, depth_range1, depth_range2, observation_method0, observation_method1, remarks, date_enregistrement, save) {
+		var cotsDb = db.openDB();
 
 		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
 					+((depth_range0.length > 0 && depth_range1.length > 0) ? ", " : ((depth_range0.length>0 && depth_range2.length > 0) ? ", " : ""))
@@ -65,7 +65,7 @@ var db = {
 																observation_latitude, observation_longitude, observation_number, observation_culled, 
 																counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 																depth_range, observation_method, 
-																remarks, date_enregistrement);
+																remarks, date_enregistrement, save);
 			            }
 			        );
 
@@ -82,8 +82,8 @@ var db = {
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 				depth_range, observation_method, 
-				remarks, date_enregistrement) {
-		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+				remarks, date_enregistrement, save) {
+		var cotsDb = db.openDB();
 
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
@@ -97,7 +97,7 @@ var db = {
 					
 					var idform = results.rows.item(i).id;
 					//console.log("Id ======"+ idform);
-					return db.synchronizeCOTs("form", idform);
+					return db.synchronizeCOTs("form", idform, save);
 				}
 			}, function(transaction, error) {		    
 		    	console.log("some error updating data "+error.message);
@@ -112,31 +112,34 @@ var db = {
 		app.updateMsg("This form will be sent the next time internet will be available");
 	 },*/
 
-	synchronizeCOTs: function(from, id) {
+	synchronizeCOTs: function(from, id, save) {
 		//console.log("C good id=="+id+" et from==="+from)
 	    var cotsDb = db.openDB();
-	    cotsDb.transaction(function(transaction) {
-		transaction.executeSql(sql.SELECT, [id], 
-			function(transaction, results) {
-				//console.log("select cots: "+results.rows.length);
-				for(i=0; i<results.rows.length;i++){
-					// parse results in JSON
-			    		var item = JSON.stringify(results.rows.item(i));
-					// send results
-					db.sendRemote(item,results.rows.item(i).id,from);			
-				}
-			}, function(e) {
-		    //console.log("some error getting questions");
-		});
-	    });
+	    if(save == "true"){
+	    	app.updateMsg("Your form was successfully saved");
+	    }
+	    else if (save == "false"){
+		    cotsDb.transaction(function(transaction) {
+				transaction.executeSql(sql.SELECT, [id], function(transaction, results) {
+					//console.log("select cots: "+results.rows.length);
+					for(i=0; i<results.rows.length;i++){
+						// parse results in JSON
+				    		var item = JSON.stringify(results.rows.item(i));
+						// send results
+						db.sendRemote(item,results.rows.item(i).id,from);			
+					}
+				}, function(e) {
+				    //console.log("some error getting questions");
+				});
+		    });
+		}
 	},
 
 	sendRemote: function(json,id,from){
 		xhr = new XMLHttpRequest();
-		//var url = "http://oreanet-rest.ird.nc/restcotnc/cot.php";
-		var url = "http://fisheries.gov.vu/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=025b601f76594ecd73ea1727870c5d34";
+		var url = "http://vcot-monitoring/fisheries/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=02e788534b81a1d354e85a5002d4be5d"
 		xhr.open("POST", url, true);
-		xhr.setRequestHeader("Content-type", "application/json");
+		//xhr.setRequestHeader("Content-type", "application/json");
 		xhr.onreadystatechange = function () { 
 		    	if (xhr.readyState == 4 && xhr.status == 200) {
 				var json = JSON.parse(xhr.responseText);
@@ -266,7 +269,7 @@ var db = {
 	            	
 
 	          		//on remplit le tableau
-	                  listbdd = "<tr><td data-th='Date of creation'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date of observation'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr of COTS'>" + results.rows.item(i).observation_number + "</td><td data-th='Location'>" + results.rows.item(i).observation_location + "</td><td data-th='Delete'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finalize'><button type=button href=# onclick='return app.getFormID("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finalize</button></td>" + "</tr>";
+	                  listbdd = "<tr><td data-th='Date of creation'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date of observation'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr of COTS'>" + results.rows.item(i).observation_number + "</td><td data-th='Location'>" + results.rows.item(i).observation_location + "</td><td data-th='Delete'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finalize'><button type=button href=# onclick='return app.getFormLatLng("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finalize</button></td>" + "</tr>";
 	                    parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
 	                    
 	               }
@@ -314,6 +317,21 @@ var db = {
         });
     },
 
+    //On récupère la latitude et la longitude
+    recupLatLng: function(id){
+
+        var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+        return cotsDb.transaction(function(transaction) {
+        transaction.executeSql(sql.SELECTreditCOTForm, [id], function(transaction, results) {
+    		for (i = 0; i < results.rows.length; i++){
+        		window.location.href="./index.html?id="+ id +
+        		"&?lat=" + results.rows.item(i).observation_latitude +
+        		"&?lng=" + results.rows.item(i).observation_longitude;
+    		}
+        }, null);
+        });
+    },
+    
     //On modifier un tuple déjà existant grâce a son id
     updateFormCot: function(observer_name, observer_tel, observer_email, 
 			    			observation_day, observation_month, observation_year, observation_location, 
@@ -323,7 +341,7 @@ var db = {
 							counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
 							depth_range0, depth_range1, depth_range2, 
 							observation_method0, observation_method1, 
-							remarks, id) {
+							remarks, id, save) {
 		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
 		
 		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
@@ -346,7 +364,7 @@ var db = {
 					depth_range, observation_method, 
 					remarks, id], 
 				function(transaction, results) {
-					db.synchronizeCOTs("form", id);	
+					db.synchronizeCOTs("form", id, save);	
 				}, function(e) {
 		    		
 				}

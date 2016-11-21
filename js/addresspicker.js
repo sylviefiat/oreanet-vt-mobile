@@ -21,6 +21,7 @@ if(!bg){
 ;(function ($) {
     "use strict";
     var methods;
+    var defaultCenter = [-17.445122, 168.30085099999997];
 
 	var timer = {};
 	function delay (callback, ms, type){
@@ -87,6 +88,7 @@ if(!bg){
 		} else {
 			// default marker
 			that.gmarker = new google.maps.Marker(markerOptions);
+			that.gmarker.setPosition(mapOptions.center);
 		}				
 		
 		// event triggered when marker is dragged and dropped
@@ -98,8 +100,8 @@ if(!bg){
 			that.gmarker.setPosition(event.latLng);
 			that.geocodeLookup(event.latLng, false, "latLng", true);
 		});		
-		
-		this.gmarker.setVisible(false);
+		var isDefault = (defaultCenter[0] == mapOptions.center.lat()) && (defaultCenter[1] == mapOptions.center.lng());
+		this.gmarker.setVisible(!isDefault);
 	}
 	
 	function createCircle(){		
@@ -132,7 +134,8 @@ if(!bg){
 		};
 				
 		that.gcircle = circle;
-		that.gcircle.setVisible(false);	
+		var isDefault = (defaultCenter[0] == mapOptions.center.lat()) && (defaultCenter[1] == mapOptions.center.lng());
+		that.gcircle.setVisible(!isDefault);
 		
 		google.maps.event.addListener(that.gcircle, 'radius_changed', function(){
 			that.updater();
@@ -155,7 +158,7 @@ if(!bg){
 				mapHeight: '300px',
                 mapOptions: {
                     zoom: 6,
-                    center: [-17.445122, 168.300851],
+                    center: defaultCenter,
                     scrollwheel: true,
 		    		zoomGesturesEnabled: true,
 		    		scrollGesturesEnabled: true,
