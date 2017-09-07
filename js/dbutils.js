@@ -2,7 +2,7 @@
 var db = {
 	
 	openDB: function() {
-		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+		var cotsDb = window.openDatabase("cotvt_admin", "1.0", "COT table", 1024*1000);
 		cotsDb.transaction(function(transaction) {
 		    transaction.executeSql(sql.CREATE, [], function(transaction, results) {
 			//console.log("checked cots database creation");
@@ -15,7 +15,7 @@ var db = {
 	},
 
 	dropDB: function() {
-		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+		var cotsDb = window.openDatabase("cotvt_admin", "1.0", "COT table", 1024*1000);
 		cotsDb.transaction(function(transaction) {
 		    transaction.executeSql(sql.DROP, [], function(transaction, results) {
 			//console.log("database supprimer");
@@ -27,7 +27,7 @@ var db = {
 		return 0;
 	},
 
-	insertCOT: function(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+	insertCOT: function(observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -45,7 +45,7 @@ var db = {
 
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.INSERT, 
-				[observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+				[observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -60,7 +60,7 @@ var db = {
 			            },
 			            // si on EST connecté
 			            function(){
-			            	return db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+			            	return db.getidFormInsertCOT(observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 																observation_localisation, observation_region, observation_country, 
 																observation_latitude, observation_longitude, observation_number, observation_culled, 
 																counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -77,7 +77,7 @@ var db = {
 	},
 
 	//récupère l'id du nouveau formulaire a envoyé
-	getidFormInsertCOT: function(observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+	getidFormInsertCOT: function(observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 				observation_localisation, observation_region, observation_country, 
 				observation_latitude, observation_longitude, observation_number, observation_culled, 
 				counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -86,7 +86,7 @@ var db = {
 		var cotsDb = db.openDB();
 
 		cotsDb.transaction(function(transaction) {
-			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_day, observation_month, observation_year, observation_location, 
+			transaction.executeSql(sql.SELECTidINSERT, [observer_name, observer_tel, observer_email, observation_datetime, observation_location, 
 					observation_localisation, observation_region, observation_country, 
 					observation_latitude, observation_longitude, observation_number, observation_culled, 
 					counting_method_timed_swim, counting_method_distance_swim, counting_method_other, 
@@ -138,7 +138,7 @@ var db = {
 	sendRemote: function(json,id,from){
 		xhr = new XMLHttpRequest();
 		//var url = "http://oreanet-rest.ird.nc/restcotnc/cot.php";
-		var url = "https://fisheries.gov.vu/index.php?option=com_api&app=restcot&resource=restcot&format=raw&key=025b601f76594ecd73ea1727870c5d34";
+		var url = url_fisheries;
 		xhr.open("POST", url, true);
 		//xhr.setRequestHeader("Content-type", "application/json");
 		xhr.onreadystatechange = function () { 
@@ -259,18 +259,9 @@ var db = {
 	        	app.updateMsg("You have " + results.rows.length + " form(s) to complete. Thank you for helping us to protect Vanuatu's reefs.");
 
 	            for (i = 0; i < results.rows.length; i++){ 
-	            	var mois_month = results.rows.item(i).observation_month;
-	            	var jour_day = results.rows.item(i).observation_day;
-	            	if (mois_month < 10){
-	            		mois_month = ("0" + mois_month).substr(mois_month.length-1,2);
-	            	}
-	            	if(jour_day < 10){
-	            		jour_day = ("0" + jour_day).substr(jour_day.length-1,2);
-	            	}
-	            	
-
+	            
 	          		//on remplit le tableau
-	                  listbdd = "<tr><td data-th='Date of creation'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date of observation'>" + jour_day + "/" + mois_month + "/" + results.rows.item(i).observation_year + "</td><td data-th='Nbr of COTS'>" + results.rows.item(i).observation_number + "</td><td data-th='Location'>" + results.rows.item(i).observation_location + "</td><td data-th='Delete'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finalize'><button type=button href=# onclick='return app.getFormLatLng("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finalize</button></td>" + "</tr>";
+	                  listbdd = "<tr><td data-th='Date of creation'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date of observation'>" + results.rows.item(i).observation_datetime + "</td><td data-th='Nbr of COTS'>" + results.rows.item(i).observation_number + "</td><td data-th='Location'>" + results.rows.item(i).observation_location + "</td><td data-th='Delete'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finalize'><button type=button href=# onclick='return app.getFormLatLng("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finalize</button></td>" + "</tr>";
 	                    parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
 	                    
 	               }
@@ -285,7 +276,7 @@ var db = {
     //On récupère l'id d'un formulaire pour charger ses données
     reditCOTForm: function(id){
 
-        var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+        var cotsDb = window.openDatabase("cotvt_admin", "1.0", "COT table", 1024*1000);
         cotsDb.transaction(function(transaction) {
         transaction.executeSql(sql.SELECTreditCOTForm, [id], function(transaction, results) {
             //console.log("resultat "+ results.rows.length);
@@ -296,9 +287,7 @@ var db = {
                     results.rows.item(i).observer_name,
                     results.rows.item(i).observer_tel,
                     results.rows.item(i).observer_email,
-                    results.rows.item(i).observation_day,
-                    results.rows.item(i).observation_month,
-                    results.rows.item(i).observation_year,
+                    results.rows.item(i).observation_datetime,
                     results.rows.item(i).observation_location,
                     results.rows.item(i).observation_localisation,
                     results.rows.item(i).observation_region,
@@ -321,7 +310,7 @@ var db = {
     //On récupère la latitude et la longitude
     recupLatLng: function(id){
 
-        var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+        var cotsDb = window.openDatabase("cotvt_admin", "1.0", "COT table", 1024*1000);
         return cotsDb.transaction(function(transaction) {
         transaction.executeSql(sql.SELECTreditCOTForm, [id], function(transaction, results) {
     		for (i = 0; i < results.rows.length; i++){
@@ -335,7 +324,7 @@ var db = {
     
     //On modifier un tuple déjà existant grâce a son id
     updateFormCot: function(observer_name, observer_tel, observer_email, 
-			    			observation_day, observation_month, observation_year, observation_location, 
+			    			observation_datetime, observation_location, 
 							observation_localisation, observation_region, observation_country, 
 							observation_latitude, observation_longitude, 
 							observation_number, observation_culled, 
@@ -343,7 +332,7 @@ var db = {
 							depth_range0, depth_range1, depth_range2, 
 							observation_method0, observation_method1, 
 							remarks, id, save) {
-		var cotsDb = window.openDatabase("cot_admin", "1.0", "COT table", 1024*1000);
+		var cotsDb = window.openDatabase("cotvt_admin", "1.0", "COT table", 1024*1000);
 		
 		var depth_range = ( depth_range0.length > 0 ? depth_range0 : "")
 					+((depth_range0.length > 0 && depth_range1.length > 0) ? ", " : ((depth_range0.length>0 && depth_range2.length > 0) ? ", " : ""))
@@ -357,7 +346,7 @@ var db = {
 		cotsDb.transaction(function(transaction) {
 			transaction.executeSql(sql.UPDATEFORM, 
 				[	observer_name, observer_tel, observer_email, 
-					observation_day, observation_month, observation_year, observation_location, 
+					observation_datetime, observation_location, 
 					observation_localisation, observation_region, observation_country, 
 					observation_latitude, observation_longitude, 
 					observation_number, observation_culled, 
