@@ -2,8 +2,8 @@
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
         id          = "nc.oreanet-vt.mobile"
-        versionCode = "1" 
-        version     = "1.0.2" >
+        versionCode = "1.0.3" 
+        version     = "1.0.3" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -13,7 +13,7 @@
         Help us prevent Crowns of thorns risks on coral reef ecosystems by reporting them using Oreanet VT mobile application.
     </description>
    
-    <icon src="pin-oreanet-vt.png" />
+    <icon src="oreanet_vt_app.png" />
 
     <author href="fisheries.gov.vu" email="sylvie.fiat@ird.fr">
         IRD, Vanuatu Fisheries department
