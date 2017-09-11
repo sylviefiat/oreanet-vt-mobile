@@ -42,8 +42,6 @@ var app = {
     // Application Constructor
     initialize: function() {        
         this.bindEvents();
-        // set default dateformat
-        app.datepickerDefaut();
         //On enlève offline
         app.switchOnline(1);
         // supprime tout message afficher (si il y en a)
@@ -183,6 +181,8 @@ var app = {
                 //console.log("<<<<<formulaire non existant>>>>");
                 // supprime tout message afficher (si il y en a)
                 app.closeMsg();
+                // set default dateformat
+                app.datepickerDefaut();
                 // démarrer le plugin addressPicker
                 app.addressPicker();
                 // ajouter un listener sur le formulaire
@@ -203,6 +203,8 @@ var app = {
             //console.log("<<<<<formulaire existant>>>>");
             // remplir avec ces données le formulaire            
             db.reditCOTForm(id);
+            // set default dateformat
+            app.datepickerDefaut();
             // démarrer le plugin addressPicker
             if(app.getUrlVars()["lat"] !="" && app.getUrlVars()["lng"] !=""){
                     var lat = app.getUrlVars()["lat"];
@@ -313,7 +315,8 @@ var app = {
     },
 
     // Turn app to online mode
-    turnOnline: function(){
+    turnOnline: function(){        
+        app.datepickerDefaut();
         app.addressPicker();
         online=document.getElementById("onlinelist");
         app.switchOnline(1);
