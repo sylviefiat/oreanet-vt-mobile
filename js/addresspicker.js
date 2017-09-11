@@ -99,7 +99,8 @@ if(!bg){
 		google.maps.event.addListener(that.gmap, "click", function (event) {
 			that.gmarker.setPosition(event.latLng);
 			that.geocodeLookup(event.latLng, false, "latLng", true);
-		});		
+
+		});	
 		var isDefault = (defaultCenter[0] == mapOptions.center.lat()) && (defaultCenter[1] == mapOptions.center.lng());
 		this.gmarker.setVisible(!isDefault);
 	}
@@ -115,7 +116,6 @@ if(!bg){
 		}
 		
 		radius = radius || that.settings.distanceWidgetRadius;
-		//console.log(radius);
 		var circle =  new google.maps.Circle({
 			center: mapOptions.center,
 			radius: radius, // Km
@@ -135,7 +135,8 @@ if(!bg){
 				
 		that.gcircle = circle;
 		var isDefault = (defaultCenter[0] == mapOptions.center.lat()) && (defaultCenter[1] == mapOptions.center.lng());
-		that.gcircle.setVisible(!isDefault);
+
+		that.gcircle.setVisible(!isDefault);	
 		
 		google.maps.event.addListener(that.gcircle, 'radius_changed', function(){
 			that.updater();
@@ -157,7 +158,7 @@ if(!bg){
 				mapWidth: '100%',
 				mapHeight: '300px',
                 mapOptions: {
-                    zoom: 6,
+                    zoom: 7,
                     center: defaultCenter,
                     scrollwheel: true,
 		    		zoomGesturesEnabled: true,

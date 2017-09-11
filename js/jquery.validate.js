@@ -55,7 +55,7 @@ $.extend($.fn, {
 			// validate the form on submit
 			this.submit( function( event ) {
 				if ( validator.settings.debug ) {
-					// prevent form submit to be able to see //console output
+					// prevent form submit to be able to see console output
 					event.preventDefault();
 				}
 				function handle() {
@@ -567,7 +567,7 @@ $.extend($.validator, {
 					}
 				} catch(e) {
 					if ( this.settings.debug && window.console ) {
-						//console.log( "Exception occurred when checking element " + element.id + ", check the '" + rule.method + "' method.", e );
+						console.log( "Exception occurred when checking element " + element.id + ", check the '" + rule.method + "' method.", e );
 					}
 					throw e;
 				}

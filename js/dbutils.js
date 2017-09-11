@@ -8,7 +8,7 @@ var db = {
 			//console.log("checked cots database creation");
 			
 		    }, function(transaction, error) {
-		    	    //console.log("erro creating db: "+error.message);
+		    	//console.log("erro creating db: "+error.message);
 		    });
 		});
 		return cotsDb;
@@ -21,7 +21,7 @@ var db = {
 			//console.log("database supprimer");
 			
 		    }, function(transaction, error) {
-		    	    //console.log("erro creating db: "+error.message);
+		        //console.log("erro creating db: "+error.message);
 		    });
 		});
 		return 0;
@@ -56,7 +56,7 @@ var db = {
 			        app.isOnline(
 			            // si on N'EST PAS connecté alors
 			            function(){
-							app.updateMsg("This form will be sent the next time internet will be available");
+							app.updateMsg("This form will be sent available for sending the next time internet will be available");
 			            },
 			            // si on EST connecté
 			            function(){
@@ -100,7 +100,8 @@ var db = {
 					return db.synchronizeCOTs("form", idform, save);
 				}
 			}, function(transaction, error) {		    
-		    	console.log("some error updating data "+error.message);
+
+		    	//console.log("some error updating data "+error.message);
 			});
 	    });
 	},
@@ -115,6 +116,7 @@ var db = {
 	synchronizeCOTs: function(from, id, save) {
 		//console.log("C good id=="+id+" et from==="+from)
 	    var cotsDb = db.openDB();
+
 	    if(save == "true"){
 	    	app.updateMsg("Your form was successfully saved");
 	    }
@@ -248,24 +250,32 @@ var db = {
 
     //Affichage de la liste
     listCOT: function(){
-		var parentElement = document.getElementById("contentlist");
-	    var listeningElement = parentElement.querySelector('.cot_admin_list');
+	var parentElement = document.getElementById("contentlist");
+    var listeningElement = parentElement.querySelector('.cot_admin_list');
+	var cotsDb = db.openDB();
+    cotsDb.transaction(function(transaction) {
+        transaction.executeSql(sql.SELECTCOTLIST, [], function(transaction, results) {
+            //console.log("Nombre de formulaire(s) a consulter "+ results.rows.length);
+        	app.updateMsg("You have " + results.rows.length + " form(s) to complete. Thank you for helping us to protect Vanuatu's reefs.");
 
-		var cotsDb = db.openDB();
-	        cotsDb.transaction(function(transaction) {
-	        transaction.executeSql(sql.SELECTCOTLIST, [], function(transaction, results) {
-	            //console.log("Nombre de formulaire(s) a consulter "+ results.rows.length);
-
-	        	app.updateMsg("You have " + results.rows.length + " form(s) to complete. Thank you for helping us to protect Vanuatu's reefs.");
-
-	            for (i = 0; i < results.rows.length; i++){ 
-	            
+            for (i = 0; i < results.rows.length; i++){ 
+            
 	          		//on remplit le tableau
-	                  listbdd = "<tr><td data-th='Date of creation'>" + results.rows.item(i).date_enregistrement + "</td><td data-th='Date of observation'>" + results.rows.item(i).observation_datetime + "</td><td data-th='Nbr of COTS'>" + results.rows.item(i).observation_number + "</td><td data-th='Location'>" + results.rows.item(i).observation_location + "</td><td data-th='Delete'><button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button></td>" + "</td><td data-th='Finalize'><button type=button href=# onclick='return app.getFormLatLng("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finalize</button></td>" + "</tr>";
-	                    parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
-	                    
-	               }
-	    
+		listbdd = "<tr>"+
+                  	"<td data-th='Date of creation'>" + results.rows.item(i).date_enregistrement + "</td>"+
+                  	"<td data-th='Date of observation'>" + results.rows.item(i).observation_datetime + "</td>"+
+                  	"<td data-th='Nbr COTS'>" + results.rows.item(i).observation_number + "</td>"+
+                  	"<td data-th='Place'>" + results.rows.item(i).observation_location + "</td>"+
+                  	"<td data-th='Delete'>"+
+                  		"<button type=button href=# onclick='return app.supprForm("+results.rows.item(i).id+")' class='btn fa fa-trash-o fa-lg'></button>"+
+                  	"</td>" + 
+                  	"<td data-th='Finalize'>"+
+                  		"<button type=button href=# onclick='return app.getFormLatLng("+results.rows.item(i).id+")' class='btn fa fa-pencil btn-success'> Finalize</button>"+
+                  	"</td>" + 
+                  "</tr>";
+                parentElement.querySelector('.cot_list_forms').innerHTML +=  listbdd;
+                    
+               }
 	        }, function(transaction,error) {		    
 			    //console.log("some error updating data: "+error.message);
 			    return 0;
@@ -354,9 +364,9 @@ var db = {
 					depth_range, observation_method, 
 					remarks, id], 
 				function(transaction, results) {
-					db.synchronizeCOTs("form", id, save);	
+					return db.synchronizeCOTs("form", id, save);	
 				}, function(e) {
-		    		
+		    		return 0;
 				}
 			);
 	    });

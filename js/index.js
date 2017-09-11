@@ -17,27 +17,28 @@
  * under the License.
  */
 
-
- /* gloabl app management */
- var app = {
+/* gloabl app management */
+var app = {
     switchOnline: function(isOnline){
         if(isOnline){
             online=document.getElementById("onlinelist");
-            online.innerText = " online";
+
+            online.innerText = " Online";
             online.className = "ui-btn ui-btn-icon-right fa fa-signal online";
             online.removeAttribute("disabled");
         } else {
             online=document.getElementById("onlinelist");
-            online.innerText = " offline";
+
+            online.innerText = " Offline";
             online.className = "ui-btn ui-btn-icon-right fa fa-signal";
             online.setAttribute("disabled","disabled");
         }
     },
     datepickerDefaut: function(){
-         $.datepicker.setDefaults({
-             dateFormat: 'yy-mm-dd'
-         });
-     },
+        $.datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd'
+        });
+    },
     // Application Constructor
     initialize: function() {        
         this.bindEvents();
@@ -101,7 +102,6 @@
         
         //afficher la liste
         db.listCOT();
-
     },
     // Bind Event Listeners
     bindEvents: function() {
@@ -124,7 +124,7 @@
 
     // direct validation of the form 
     checkStatus: function(e){
-        var idform = app.getUrlVars()["id"],
+        var idForm = app.getUrlVars()["id"],
         elems = $('form').find('input:required'),
         invalid = $.grep(elems, function(n){
             return(!n.attributes['disabled'] && !n.validity.valid);
@@ -136,7 +136,7 @@
             app.closeMsg();
             $(elems).removeClass("error");
         } else {
-            if(idform!="" && idform!=null){
+            if(idForm!="" && idForm!=null){
                 app.updateMsg("Your form is incomplete. There are "+ $(invalid).size() +" field(s) missing. "
                     +"<a href='#' onclick='return app.cancel()'>Back to the list</a>");
             }
@@ -199,27 +199,24 @@
         //sinon on modifie un formulaire existant
         else {
             setTimeout(function(){
-                var id = app.getUrlVars()["id"];
-                //console.log("<<<<<formulaire existant>>>>");
-                // remplir avec ces données le formulaire            
-                db.reditCOTForm(id);
-                // démarrer le plugin addressPicker
-                if(app.getUrlVars()["lat"] !="" && app.getUrlVars()["lng"] !=""){
+            var id = app.getUrlVars()["id"];
+            //console.log("<<<<<formulaire existant>>>>");
+            // remplir avec ces données le formulaire            
+            db.reditCOTForm(id);
+            // démarrer le plugin addressPicker
+            if(app.getUrlVars()["lat"] !="" && app.getUrlVars()["lng"] !=""){
                     var lat = app.getUrlVars()["lat"];
                     var lng = app.getUrlVars()["lng"];
                     app.addressPickerRedit(lat, lng);
                 }
                 else {
-                    app.addressPicker();
-                }
-                //console.log("new index ==== "+ id);
-                // ajouter un listener sur le formulaire avec l'id de celui-ci
-                app.addSubmitExistForm(id);
-                // ajouter un "validateur" de formulaire
-                app.validForm();
-
-                $('input:required').change(app.checkStatus);
-                
+                app.addressPicker();
+            }
+            // ajouter un listener sur le formulaire avec l'id de celui-ci
+            app.addSubmitExistForm(id);
+            // ajouter un "validateur" de formulaire
+            app.validForm();
+                $('input:required').change(app.checkStatus);                
                 //teste liste exist ajout du retour a la liste
                 db.listExistNewForm();
 
@@ -243,8 +240,7 @@
     },
 
     //on remplit le formulaire chargé avec ces données
-    reditForm: function(name,tel,email,datetime,location,localisation,region,country,latitude,longitude,number,culled,
-        timed_swim,distance_swim,other_chbx,range,method,remarks){
+    reditForm: function(name,tel,email,datetime,location,localisation,region,country,latitude,longitude,number,culled,timed_swim,distance_swim,other_chbx,range,method,remarks){
 
         document.getElementById('observer_name').value = name;
         document.getElementById('observer_tel').value = tel;
@@ -456,7 +452,7 @@
             distanceWidgetRadius: 300,  /* meters */
             appendToAddressString: '',
             geocoderOptions: {
-                language: "fr"
+                language: "en"
             },
             markerOptions: {
             
