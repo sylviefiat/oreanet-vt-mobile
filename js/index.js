@@ -34,11 +34,6 @@ var app = {
             online.setAttribute("disabled","disabled");
         }
     },
-    datepickerDefaut: function(){
-        $.datepicker.setDefaults({
-            dateFormat: 'yy-mm-dd'
-        });
-    },
     // Application Constructor
     initialize: function() {        
         this.bindEvents();
@@ -433,6 +428,11 @@ var app = {
         document.getElementById("system-message-container").style.display = "none";
     }, 
 
+    datepickerDefaut: function(){
+        $("#observation_datetime").datepicker.setDefaults({
+            dateFormat: 'yy-mm-dd'
+        });
+    },
     addressPicker: function(){  
         $("#observation_localisation" ).addressPickerByGiro(
         {
