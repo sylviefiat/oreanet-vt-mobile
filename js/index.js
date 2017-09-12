@@ -429,7 +429,7 @@ var app = {
     }, 
 
     datepickerDefaut: function(){
-        $("#observation_datetime").datepicker.setDefaults({
+        $.datepicker.setDefaults({
             dateFormat: 'yy-mm-dd'
         });
     },
