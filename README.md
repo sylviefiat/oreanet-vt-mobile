@@ -1,4 +1,4 @@
-# oreanet-vt-mobile
+# oreanet-vt-mobile => migré gitlab in2p3 29/10/2019
 > Signalement participatif d'acanthasters à Vanuatu - Réseau [OREANET Vanuatu](http://fisheries.gov.vu "OREANET VANUATU")
 
 OREANET-VU est une application de signalement participatif d'Acanthasters planci, une étoile de mer qui se nourrit entre autres de coraux, pour les archipels du Vanuatu en collaboration  avec le Vanuatu Fisheries Department. Les données sont directement envoyées sur le site web des Fisheries, hébergé par le service informatique du premier ministre du Vanuatu.
