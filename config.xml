@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
     <widget xmlns   = "http://www.w3.org/ns/widgets"
         xmlns:gap   = "http://phonegap.com/ns/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
         id          = "nc.oreanet-vt.mobile"
-        versionCode = "1.0.5" 
-        version     = "1.0.5" >
+        versionCode = "1.0.6" 
+        version     = "1.0.6" >
 
     <!-- versionCode is optional and Android only -->
 
@@ -12,23 +13,54 @@
     <description>
         Help us prevent Crowns of thorns risks on coral reef ecosystems by reporting them using Oreanet VT mobile application.
     </description>
-   
-    <icon src="oreanet_vt_app.png" />
 
-    <author href="fisheries.gov.vu" email="sylvie.fiat@ird.fr">
-        IRD, Vanuatu Fisheries department
+    <preference name="phonegap-version" value="cli-9.0.0" />
+    <preference name="android-targetSdkVersion" value="28" />
+   
+    <icon src="www/oreanet_fj_app.png" />
+    <preference name="SplashScreen" value="screen" />
+    <preference name="SplashScreenDelay" value="5000" />
+
+    <author href="https://umr-entropie.ird.nc" email="sylvie.fiat@ird.fr">
+        Sylvie Fiat, IRD | Vanuatu Fisheries Departement
     </author>
     
-    <!--
-      This allows your app to load assets from all *.oreanet.ird.nc domains    
-    <gap:access origin="http://oreanet-vt.ird.nc" subdomains="true" />
-    <gap:access origin="*" />
-    -->   
+    <platform name="android">
+        <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <application android:icon="@mipmap/ic_launcher" />
+        </edit-config>
+        <resource-file src="www/res/android/drawable/launcher_background.xml" target="res/drawable/ic_launcher_background.xml" />
+        <resource-file src="www/res/android/mipmap-anydpi-v26/launcher.xml" target="res/mipmap-anydpi-v26/ic_launcher.xml" />
+        <resource-file src="www/res/android/mipmap-hdpi/launcher.png" target="res/mipmap-hdpi/ic_launcher.png" />
+        <resource-file src="www/res/android/mipmap-mdpi/launcher.png" target="res/mipmap-mdpi/ic_launcher.png" />
+        <resource-file src="www/res/android/mipmap-xhdpi/launcher.png" target="res/mipmap-xhdpi/ic_launcher.png" />
+        <resource-file src="www/res/android/mipmap-xxhdpi/launcher.png" target="res/mipmap-xxhdpi/ic_launcher.png" />
+        <resource-file src="www/res/android/mipmap-xxxhdpi/launcher.png" target="res/mipmap-xxxhdpi/ic_launcher.png" />
+        <splash density="land-ldpi" src="www/res/android/screen/oreanet-land-ldpi-screen.png" />
+        <splash density="land-mdpi" src="www/res/android/screen/oreanet-land-mdpi-screen.png" />
+        <splash density="land-hdpi" src="www/res/android/screen/oreanet-land-hdpi-screen.png" />
+        <splash density="land-xhdpi" src="www/res/android/screen/oreanet-land-xhdpi-screen.png" />
+        <splash density="land-xxhdpi" src="www/res/android/screen/oreanet-land-xxhdpi-screen.png" />
+        <splash density="land-xxxhdpi" src="www/res/android/screen/oreanet-land-xxxhdpi-screen.png" />
+        <splash density="port-ldpi" src="www/res/android/screen/oreanet-port-ldpi-screen.png" />
+        <splash density="port-mdpi" src="www/res/android/screen/oreanet-port-mdpi-screen.png" />
+        <splash density="port-hdpi" src="www/res/android/screen/oreanet-port-hdpi-screen.png" />
+        <splash density="port-xhdpi" src="www/res/android/screen/oreanet-port-xhdpi-screen.png" />
+        <splash density="port-xxhdpi" src="www/res/android/screen/oreanet-port-xxhdpi-screen.png" />
+        <splash density="port-xxxhdpi" src="www/res/android/screen/oreanet-port-xxxhdpi-screen.png" />
+    </platform>    
     
-    <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
-    <gap:allow-navigation href="http://fisheries.gov.vu/*" />
+    <!--
+      This allows your app to load assets from all *.oreanet.ird.nc domains    -->
+    <gap:access origin="http://fisheries.gov.vu" subdomains="true" />
+    <gap:access origin="*" />  
+    
+    <gap:plugin name="cordova-plugin-splashscreen" source="npm" version="5.0.3" />
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.3.4" />
+    <gap:allow-navigation href="http://fisheries.gov.vu" />
     <gap:allow-navigation href="./index.html" />
     <gap:allow-navigation href="./list.html" />
     <gap:allow-navigation href="./index.html?id=" />
+
 
 </widget>

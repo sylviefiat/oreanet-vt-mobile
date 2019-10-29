@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "nc.oreanet-vt.mobile"
+        versionCode = "1.0.5" 
+        version     = "1.0.5" >
+
+    <!-- versionCode is optional and Android only -->
+
+    <name>Oreanet VT</name>
+
+    <description>
+        Help us prevent Crowns of thorns risks on coral reef ecosystems by reporting them using Oreanet VT mobile application.
+    </description>
+   
+    <icon src="oreanet_vt_app.png" />
+
+    <author href="fisheries.gov.vu" email="sylvie.fiat@ird.fr">
+        IRD, Vanuatu Fisheries department
+    </author>
+    
+    <!--
+      This allows your app to load assets from all *.oreanet.ird.nc domains    
+    <gap:access origin="http://oreanet-vt.ird.nc" subdomains="true" />
+    <gap:access origin="*" />
+    -->   
+    
+    <gap:plugin name="cordova-plugin-whitelist" source="npm" version="1.0.0" />
+    <gap:allow-navigation href="http://fisheries.gov.vu/*" />
+    <gap:allow-navigation href="./index.html" />
+    <gap:allow-navigation href="./list.html" />
+    <gap:allow-navigation href="./index.html?id=" />
+
+</widget>

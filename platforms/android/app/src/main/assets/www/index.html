@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
+		<!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com; style-src 'self' 'unsafe-inline'; media-src *">-->
+	
+	    <link rel="stylesheet" type="text/css" href="css/index.css" /> 
+		<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.5.0-rc1.min.css" />
+
+	    
+		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/addresspicker.css" />
+		<link rel="stylesheet" type="text/css" href="css/ol_3.17.1.css" />
+		
+		<script language="javascript" type="text/javascript" src="js/conf.js"></script>	
+		<script language="javascript" type="text/javascript" src="js/jquery-3.4.1.min.js"></script>	
+		<script language="javascript" type="text/javascript" src="js/jquery.mobile-1.5.0-rc1.min.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery-ui.min.js"></script>
+		<script language="javascript" type="text/javascript" src="js/jquery.validate.js"></script>
+		<script language="javascript" type="text/javascript" src="js/additional-methods.js"></script>
+		<script language="javascript" type="text/javascript" src="js/ol_3.17.1.js"></script>
+        <title>Oreanet VT</title>
+    </head>
+    <body>
+        <div class="app">            
+            <div id="devicereadyoff">
+            	<!-- Splashscreen du debut -->	
+                <div class="event listening row vertical-align">
+				    <div class="splashscreen col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
+						<img src="img/logo.png" title="logo"/>
+						<p class="blink">Connecting</p>
+				    </div>
+				</div>
+				<!-- Splashscreen en cours d'envoi -->
+				<div class="event onsend row vertical-align">
+				    <div class="splashscreen col-xs-12 col-sm-12 col-md-6 col-md-offset-3">			
+						<p class="blink">Sending report</p>
+				    </div>
+				</div>
+				<!-- Splashscreen de la fin -->
+				<div class="event onclose row vertical-align">
+				    <div class="thankyoupage col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
+						<img src="img/logo.png" title="logo"/>
+						<p id="msg-fin-enregistre">Thanks for reporting acanthaster in Vanuatu</p>
+						<p><a id="lien-reload" href="#" onclick="return app.reloadForm()">Report more COTs</a></p>
+						<p><a id="lien-site-web" href="http://fisheries.gov.vu/index.php/crowns-of-thorns">Visit Oreanet monitoring website</a></p>
+						<p><a href="#" onclick="navigator.app.exitApp(); return app.reloadForm();">Quit</a></p>
+				    </div>
+				</div>
+        	</div>
+		    <!-- module d'affichage des messages (erreur ou info) -->
+		    <div id="system-message-container">
+				<div id="system-message">
+				    <div class="alert fade in" id="message">
+						<a class="close" onclick="return app.closeMsg()">×</a>
+						<p id="msg" class="alert-message"></p>
+					</div>
+				</div>
+			</div>
+			<!-- page principale -->
+			<div id="contentoff" class="container contenu">	    	
+				<div class="row">
+					<nav class="navbar navbar-default navbar-fixed-top custom-navbar" role="navigation">
+						<div id="head" data-role="header">							
+							<div id="navbar" data-role="collapsible" data-collapsed-icon="bars" data-expanded-icon="delete" class="ui-button-left">
+								<h6 class="listState">Menu <sup id="notEmptyListMenu"></sup></h6>
+								<ul data-role="listview">
+									<li><a href="#" onclick="return app.getFormID('')">Nouveau</a></li>								
+					    			<li><a href="#" onclick="return app.saveForm()">Save</a></li>
+					    			<li><a href="#" onclick="return app.cancel()">My list <sup id="notEmptyListItem" ></sup></a></li>
+									<li><a href="#" onclick="return app.showInfoMsg()">Info</a></li>
+									<li id="lien-site-menu"><a href="http://fisheries.gov.vu/index.php/crowns-of-thorns">Visit website</a></li>
+								</ul>
+							</div>
+							<div data-role="controlgroup" data-type="horizontal">
+								
+								<button id="btn-send" onclick="return app.submitForm()" class="ui-button fa fa-paper-plane invalid "> Send</button>
+								<button class="ui-button ui-button-icon-right fa fa-signal" id="onlinelist"></button>
+												
+							</div>
+						</div>
+					</nav> 				
+					<!-- /navbar -->
+					
+				    <!-- formulaire -->
+				    <div class="col-lg-12">
+						<div class="cot_admin_edit front-end-edit">
+			    			<div class="form">
+						 
+								<form method="get" id="form-cot_admin" role="form">
+							    
+								    <!-- part I -->
+								    <label>
+								    	<span class="input-group-addon exergue"><span class="fa fa-user"></span> Observer</span>
+								    </label>
+							
+								    <div ddata-role="fieldcontain" class="ui-hide-label">
+								    	<input type="text" data-role="textinput" name="observer_name" id="observer_name" value="" placeholder="Observer name" required/>
+								     	<span style="display:none;" >
+							    		    <input type="text" id="id" name="id" readonly="readonly" value="" size="32"/>
+							    	    	</span>
+								    </div>
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								    	<input type="tel" data-role="textinput" name="observer_tel" id="observer_tel" value="" placeholder="Phone Number"/>
+								    </div>
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								    	<input type="email" data-role="textinput" name="observer_email" id="observer_email" value="" placeholder="Email" required/>
+								    </div>
+
+								    <!-- part II -->
+								    <label>
+								    	<span class="input-group-addon exergue"><span class="fa fa-calendar"></span> Date and place</span>
+								    </label>	
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								    	<input name="observation_datetime" id="observation_datetime" placeholder="Date" data-role="textinput" type="date" required/>
+								    </div>
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								    	<textarea name="observation_location" data-role="textinput" id="observation_location" placeholder="Observation context "></textarea>
+								    </div>
+
+							    	<div id="offlineForm">
+
+									    <div data-role="fieldcontain" class="ui-hide-label">
+									    	<input type="text" data-role="textinput" id="observation_localisation" name="observation_localisation" class="formatted_address" value="" size="32" autocomplete="off" placeholder="Select localization on the map" required></input>
+									    </div>
+									    <div data-role="fieldcontain" class="ui-hide-label">
+									    	<input type="text" data-role="textinput" name="observation_region" id="observation_region" value="" class="region form-control" placeholder="Region"/>
+									    </div>
+									    <div data-role="fieldcontain" class="ui-hide-label">
+									    	<input type="text" data-role="textinput" name="observation_pays" id="observation_pays" value="" class="country form-control" placeholder="Country"/>
+									    </div>
+									    <div data-role="fieldcontain" class="ui-hide-label">
+									    	<input type="text" data-role="textinput" name="observation_latitude" id="observation_latitude" value="" class="latitude form-control" placeholder="Latitude"/>
+									    </div>
+									    <div data-role="fieldcontain" class="ui-hide-label">
+									    	<input type="text" data-role="textinput" name="observation_longitude" id="observation_longitude" value="" class="longitude form-control" placeholder="Longitude"/>
+									    </div>
+							    	</div>
+
+								    <!-- part III -->
+								    <label>
+								    	<span class="input-group-addon exergue"><span class="fa fa-eye"></span> Acanthasters</span>
+								    </label>
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								    	<input type="text" data-role="textinput" name="observation_number" id="observation_number" value="" placeholder="Number of COTs observed" required/>
+								    </div>
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								    	<input type="hidden" name="observation_culled" id="observation_culled" value="" placeholder="Number of COTS culled"/>
+								    </div>
+
+							    	<!-- part IV -->
+							    	<label>
+							    		<span class="input-group-addon exergue"><span class="fa fa-binoculars"></span> Observation method</span>
+							    	</label>	
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								        <fieldset data-role="controlgroup">
+										    <input type="checkbox" name="observation_method0" id="observation_method0" value="snorkelling"/>
+										    <label for="observation_method0" id="label_observation_method0">Snorkelling</label>
+										    <input type="checkbox" name="observation_method1" id="observation_method1" value="scuba diving"/>
+										    <label for="observation_method1" id="label_observation_method1">Scuba diving</label>
+								        </fieldset>
+								    </div>
+								    <!-- part V -->
+								    <label>
+								    	<span class="input-group-addon exergue"><span class="fa fa-arrows-v"></span> Depth range</span>
+								    </label>	
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								        <fieldset data-role="controlgroup">
+										    <input type="checkbox" id="depth_range0" name="depth_range0" value="shallow">
+										    <label for="depth_range0" id="label_depth_range0">Less than 2m</label>
+										    <input type="checkbox" id="depth_range1" name="depth_range1" value="medium">
+										    <label for="depth_range1" id="label_depth_range1">Between 2 and 10m</label>
+										    <input type="checkbox" id="depth_range2" name="depth_range" value="deep">
+										    <label for="depth_range2" id="label_depth_range2">More than 10m</label>
+								        </fieldset>
+								    </div>
+								   <!-- part VI -->
+								    <label>
+								    	<span class="input-group-addon exergue"><span class="fa fa-cogs"></span> Counting method</span>
+								    </label>
+								    <div data-role="fieldcontain" class="ui-hide-label">
+								        <fieldset data-role="controlgroup" data-type="horizontal">
+										    <input type="checkbox" id="counting_method_timed_swim_chbx" name="counting_method_timed_swim_chbx" onclick="app.enable_timed_swim(this.checked)"></input>
+										    <label for="counting_method_timed_swim_chbx">Timed swim</label>
+										    <input type="checkbox" id="counting_method_distance_swim_chbx" name="counting_method_distance_swim_chbx" onclick="app.enable_distance_swim(this.checked)"></input>
+										    <label for="counting_method_distance_swim_chbx">Distance swim</label>
+										    <input type="checkbox" id="counting_method_other_chbx" name="counting_method_other_chbx" onclick="app.enable_other(this.checked)"></input>
+										    <label for="counting_method_other_chbx">Other</label>
+								        </fieldset>
+								    </div>
+
+							    	<div data-role="fieldcontain" class="ui-hide-label">
+										<label for="counting_method_timed_swim" class="ui-hidden-accessible">Time</label>
+										<input type="text" data-role="textinput" name="counting_method_timed_swim" id="counting_method_timed_swim" value="" class="form-control" placeholder="Swimming time" readonly="readonly">
+							    	</div>
+							   
+								    <div data-role="fieldcontain" class="ui-hide-label">
+										<label for="counting_method_distance_swim" class="ui-hidden-accessible">Distance</label>
+										<input type="text" data-role="textinput" name="counting_method_distance_swim" id="counting_method_distance_swim" value="" class="form-control" placeholder="Distance swim" readonly="readonly"></input>
+								    </div>
+							    
+								    <div data-role="fieldcontain" class="ui-hide-label">
+										<label for="counting_method_other" class="ui-hidden-accessible">Other</label>
+										<input type="text" data-role="textinput" name="counting_method_other" id="counting_method_other" value="" class="form-control" placeholder="Other" readonly="readonly"></input>			
+								    </div>
+								    <!-- part VII -->
+								    <label>
+								    	<span class="input-group-addon exergue"><span class="fa fa-comment""></span> Remarks</span>
+								    </label>
+							    	<div data-role="fieldcontain" class="ui-hide-label">
+							    		<textarea name="remarks" data-role="textinput" id="remarks" placeholder="Ex: living corals coverture, dead corals, bleaching, seeweeds…"></textarea>
+							    	</div>
+								    <!-- part VIII -->
+								    <div id="btns-cancel-save">
+					    				<button id="btn-save" style="display:none;" href="#" onclick="return app.saveForm()">Sauvegarder</button>
+					    			</div>	
+								</form>
+					    	</div>
+						</div>
+			    	</div>
+			    </div>
+			</div>
+   		</div>
+		<script language="javascript" type="text/javascript" src="cordova.js"></script>
+	    <script language="javascript" type="text/javascript" src="js/index.js"></script>
+		<script language="javascript" type="text/javascript" src="js/sql.js"></script>
+	    <script language="javascript" type="text/javascript" src="js/dbutils.js"></script>
+		<script language="javascript" type="text/javascript" src="js/addresspicker.js"></script>
+	    <script language="javascript" type="text/javascript">
+	        app.initialize();
+	    </script>
+    </body>
+</html>

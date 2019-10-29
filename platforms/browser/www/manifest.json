@@ -1,0 +1,17 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Oreanet VT",
+  "short_name": "Oreanet VT",
+  "version": "nc.oreanet_vt.mobile",
+  "description": "Help us prevent Crowns of thorns risks on coral reef ecosystems by reporting them using Oreanet VT mobile application.",
+  "author": "Sylvie Fiat, IRD | Vanuatu Fisheries Departement",
+  "icons": [
+    {
+      "src": "www/oreanet_fj_app.png",
+      "type": "image/png",
+      "sizes": "undefinedxundefined"
+    }
+  ],
+  "start_url": "index.html"
+}
